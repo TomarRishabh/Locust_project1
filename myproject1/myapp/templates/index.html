@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Send Message</title>
+  </head>
+  <body>
+    <button id="sendButton">Click me to send 'Hii'</button>
+    <p id="responseMessage"></p>
+
+    <script>
+      document
+        .getElementById("sendButton")
+        .addEventListener("click", function () {
+          fetch("http://127.0.0.1:8000/send-message/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: "Hii" }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("responseMessage").innerText =
+                data.response || data.error;
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>
